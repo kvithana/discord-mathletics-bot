@@ -11,7 +11,7 @@ module.exports = (question, count, countCap, user, incorrect) => {
 		embed = embed.addField('First Correct', `${user} 👌`);
 	}
 	if (Array.from(incorrect).length) {
-		embed = embed.addField('Incorrect', Array.from(incorrect).concat(['']).join(' -1\n'));
+		embed = embed.addField('Incorrect', Array.from(incorrect).concat(['']).join(' 🔽\n'));
 	}
 	return embed;
 };

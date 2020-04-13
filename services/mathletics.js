@@ -67,7 +67,6 @@ class Mathletics {
 
 	createQuestion() {
 		const op = _.sample(this.operations);
-		console.log('op', op);
 		const opNums = this.getExpressionNumbers(op);
 		const expNums = op.create(...opNums);
 		console.log('expNums', expNums);

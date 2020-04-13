@@ -8,21 +8,14 @@ class GameMaster {
 	}
 
 	createGame(ops, countCap, mlOpts = {}) {
-		console.log('Creating game.');
-		if (!this.isRunning) {
-			this.ml = new Mathletics(ops, mlOpts);
-			this.countCap = countCap;
-			this.currentCount = 0;
-			this.leaderboard = {};
-			this.isRunning = true;
-			this.printLeaderboard = false;
-			this.lastCorrect = 0;
-			console.log('Created game.');
-		}
-		else {
-			throw Error('Game already running.');
-		}
-
+		this.ml = new Mathletics(ops, mlOpts);
+		this.countCap = countCap;
+		this.currentCount = 0;
+		this.leaderboard = {};
+		this.isRunning = true;
+		this.printLeaderboard = false;
+		this.lastCorrect = 0;
+		console.log('Created game.');
 	}
 
 	getCurrentQuestion() {
@@ -34,7 +27,6 @@ class GameMaster {
 	}
 
 	getIncorrect() {
-		console.log(this.incorrect);
 		return this.incorrect.slice(-2)[0];
 	}
 
