@@ -36,9 +36,11 @@ Currently, the operations supported are:
 
 To begin a Mathletics game you can send the following command in the chat:
 ```
-$mathletics <no. questions> <operations>
+$mathletics [force] <no. questions> <operations>
 ```
 Where `operations` can be a space separated list of any of the above supported operations.
+
+Use `force` to force restart a game if there is currently one in progress.
 
 As an example, the following command will start a Mathletics game with 20 questions with both addition and subtraction questions chosen at random:
 ```
