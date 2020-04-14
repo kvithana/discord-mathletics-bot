@@ -17,6 +17,7 @@ const SM = new SessionManager();
 
 client.once('ready', () => {
 	console.log('Ready!');
+	client.user.setActivity('$mathletics');
 });
 
 client.on('message', message => {
