@@ -34,6 +34,10 @@ Currently, the operations supported are:
 - `%` Modulo
 - `//` Integer Division
 
+To see these options in the chat, run the following command:
+```
+$mathletics
+```
 To begin a Mathletics game you can send the following command in the chat:
 ```
 $mathletics [force] <no. questions> <operations>
