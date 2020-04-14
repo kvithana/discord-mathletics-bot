@@ -19,5 +19,6 @@ module.exports = () => {
         - `//` Integer Division\n\
         ')
 		.addField('Forcing A New Game', 'If a game is currently in progress and you want to start a new one,\
-        you can use `force`');
+        you can use `force`')
+		.setFooter('Created by @_kalpal');
 };
