@@ -25,8 +25,16 @@ client.on('message', message => {
 	if (message.member.displayName === 'JimmyNutron') {
 		return message.channel.send('Fuck you Jimmy Nuttron.');
 	}
-	if (message.content.match(/^\$mathletics$/)) {
-		message.channel.send(About());
+	if (message.content.match(/^\$mathletics$/) || message.content.match(/^\$mathletics help$/)) {
+		return message.channel.send(About());
+	}
+	if (message.content.match(/^\$mathletics question$/)) {
+		return message.channel.send(
+			Question(
+				GM.getCurrentQuestion(),
+				GM.currentCount,
+				GM.countCap,
+			));
 	}
 	if (message.content.match(/^\$mathletics .*/)) {
 		let forceNew = false;

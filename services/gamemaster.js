@@ -19,7 +19,12 @@ class GameMaster {
 	}
 
 	getCurrentQuestion() {
-		return this.ml.currentQuestion.string;
+		if (this.isRunning) {
+			return this.ml.currentQuestion.string;
+		}
+		else {
+			return 'No game in progress.';
+		}
 	}
 
 	getLeaderboard() {
