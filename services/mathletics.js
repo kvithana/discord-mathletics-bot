@@ -38,7 +38,7 @@ const operations = {
 		create: (a, b) => [mult(a)(b), a, b],
 	},
 	'%' :{
-		char: '%',
+		char: 'mod',
 		func: mod,
 		isValid: x => x < 13 && x != 1,
 		create: (a, b) => {
@@ -47,7 +47,7 @@ const operations = {
 		},
 	},
 	'//' :{
-		char: '//',
+		char: 'div',
 		func: intDiv,
 		isValid: x => x < 13 && x != 1,
 		create: (a, b) => {
