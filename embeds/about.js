@@ -3,7 +3,8 @@ const Discord = require('discord.js');
 module.exports = () => {
 	return new Discord.MessageEmbed()
 		.setColor('#0099ff')
-		.setTitle('Mathletics Bot Help')
+		.setTitle('Mathletics Bot')
+		.setURL('https://github.com/kvithana/discord-mathletics-bot')
 		.setAuthor('Mathletics')
 		.setDescription('How to use me:')
 		.addField('Command', '`$mathletics [force] <no. questions> <operations>`\
