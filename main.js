@@ -1,10 +1,10 @@
 const Discord = require('discord.js');
-const GameMaster = require('./services/gamemaster');
-
+const SessionManager = require('./services/sessionmanager');
 // import embeds
 const Leaderboard = require('./embeds/leaderboard');
 const Question = require('./embeds/question');
 const Correct = require('./embeds/correct');
+const About = require('./embeds/about');
 // import environment variables
 require('dotenv').config();
 
@@ -12,17 +12,21 @@ require('dotenv').config();
 const client = new Discord.Client();
 client.login(process.env.DISCORD_TOKEN);
 
-// initialise Mathletics GameMaster
-const GM = new GameMaster();
+// initialise session manager
+const SM = new SessionManager();
 
 client.once('ready', () => {
 	console.log('Ready!');
 });
 
-
 client.on('message', message => {
+	const GM = SM.getSession(message.channel.id);
+
 	if (message.member.displayName === 'JimmyNutron') {
 		return message.channel.send('Fuck you Jimmy Nuttron.');
+	}
+	if (message.content.match(/^\$mathletics$/)) {
+		message.channel.send(About());
 	}
 	if (message.content.match(/^\$mathletics .*/)) {
 		let forceNew = false;
@@ -32,11 +36,8 @@ client.on('message', message => {
 			forceNew = true;
 			params = params.slice(1);
 		}
-		let numQuestions;
-		try {
-			numQuestions = parseInt(params[0]);
-		}
-		catch (e) {
+		const numQuestions = parseInt(params[0]);
+		if (isNaN(numQuestions)) {
 			return message.channel.send('No question count provided.');
 		}
 		if (!params.length) {
@@ -47,7 +48,7 @@ client.on('message', message => {
 		if (!ops.length) {
 			return message.channel.send('No operations provided.');
 		}
-		if(!ops.every((op => ['+', '-', '*', '/', '%', '//'].includes(op)))) {
+		if (!ops.every(op => ['+', '-', '*', '/', '%', '//'].includes(op))) {
 			return message.channel.send('Invalid operations.');
 		}
 		if (GM.isRunning && !forceNew) {
@@ -56,20 +57,41 @@ client.on('message', message => {
 
 		GM.createGame(ops, numQuestions);
 		message.channel.send('New Mathletics game.');
-		message.channel.send(Question(GM.getCurrentQuestion(), GM.currentCount, GM.countCap, null, GM.getIncorrect()));
+		message.channel.send(
+			Question(
+				GM.getCurrentQuestion(),
+				GM.currentCount,
+				GM.countCap,
+				null,
+				GM.getIncorrect(),
+			),
+		);
 	}
 	if (GM.isRunning) {
 		if (message.content.match(/^-?\d+$/)) {
 			const response = parseInt(message.content);
 			const isCorrect = GM.submit(message.member.displayName, response);
 			if (isCorrect && GM.isRunning) {
-				setTimeout(() => message.channel.send(Question(GM.getCurrentQuestion(), GM.currentCount, GM.countCap, message.member.displayName, GM.getIncorrect())), 1000) ;
+				setTimeout(
+					() =>
+						message.channel.send(
+							Question(
+								GM.getCurrentQuestion(),
+								GM.currentCount,
+								GM.countCap,
+								message.member.displayName,
+								GM.getIncorrect(),
+							),
+						),
+					1000,
+				);
 			}
 		}
 		if (!GM.isRunning) {
 			GM.printLeaderboard = false;
-			message.channel.send(Leaderboard(GM.getLeaderboard(), GM.currentCount, GM.countCap));
+			message.channel.send(
+				Leaderboard(GM.getLeaderboard(), GM.currentCount, GM.countCap),
+			);
 		}
 	}
-
 });
