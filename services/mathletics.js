@@ -52,7 +52,7 @@ const operations = {
 		isValid: x => x < 13 && x != 1,
 		create: (a, b) => {
 			const m = Math.min(Math.floor(Math.random() * a));
-			return [mult(a)(b) + m, a, m];
+			return [mult(a)(b) + m, a, intDiv((mult(a)(b) + m))(a)];
 		},
 	},
 };
